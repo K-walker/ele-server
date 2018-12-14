@@ -2,7 +2,7 @@ var express = require('express');
 var history = require('connect-history-api-fallback');
 var router = express.Router();
 var path = require('path');
-var http = require('http');
+const fetch = require('node-fetch');
 
 express().use(history())
 
@@ -3986,13 +3986,105 @@ router.get('/city_list' , function (req , res) {
 })
 
 router.get('/position' , function (req , res) {
-    var data = [{"address":"上海市黄浦区上海市","city":"上海市","city_id":1,"distance":"","district_id":5251,"geohash":"wtw3sjq6jkkm","id":"B00156EAZH","latitude":31.230378,"longitude":121.473658,"name":"上海市","request_id":"5835126550183901584","short_address":"黄浦区上海市"},{"address":"上海市黄浦区复兴中路523弄42289号","city":"上海市","city_id":1,"distance":"","district_id":5251,"geohash":"wtw3s4db72cx","id":"B000A8ZFFX","latitude":31.214953,"longitude":121.468762,"name":"Shanghai Slims","request_id":"5038636222639008643","short_address":"复兴中路523弄42289号"},{"address":"上海市黄浦区南苏州路76号(近圆明园路)","city":"上海市","city_id":1,"distance":"","district_id":5251,"geohash":"wtw3sx9mrxkx","id":"B00156P9UH","latitude":31.243312,"longitude":121.488861,"name":"Shanghai Rose","request_id":"7018851318846862157","short_address":"南苏州路76号(近圆明园路)"},{"address":"上海市徐汇区襄阳北路97襄阳大楼615","city":"上海市","city_id":1,"distance":"","district_id":5252,"geohash":"wtw3eg1hztu4","id":"B00155IP58","latitude":31.218498,"longitude":121.455558,"name":"Smart Shanghai","request_id":"4147610384083257937","short_address":"襄阳北路97襄阳大楼615"},{"address":"上海市静安区万航渡路849海森国际大厦10层1003","city":"上海市","city_id":1,"distance":"","district_id":5254,"geohash":"wtw3ehywg1kz","id":"B00155HUZA","latitude":31.228431,"longitude":121.42996,"name":"Shanghai Apparels","request_id":"5210623397094821430","short_address":"万航渡路849海森国际大厦10层1003"},{"address":"上海市闵行区七莘路1885号(近华友路)","city":"上海市","city_id":1,"distance":"","district_id":5259,"geohash":"wtw31skp84k9","id":"B0015705XB","latitude":31.137927,"longitude":121.36048,"name":"巴黎shanghai","request_id":"3850078471436171091","short_address":"七莘路1885号(近华友路)"},{"address":"上海市浦东新区东方路738裕安大厦17层","city":"上海市","city_id":1,"distance":"","district_id":5262,"geohash":"wtw3tkgxbf8s","id":"B001558TSE","latitude":31.228609,"longitude":121.524615,"name":"Shanghai Metal Corporation","request_id":"2282087744082965689","short_address":"东方路738裕安大厦17层"},{"address":"上海市闵行区虹梅休闲街3338弄21C号","city":"上海市","city_id":1,"distance":"","district_id":5259,"geohash":"wtw36q0nenmb","id":"B00156N9PL","latitude":31.191335,"longitude":121.388076,"name":"Shanghai Brewery(虹梅路店)","request_id":"2577075517006287872","short_address":"虹梅休闲街3338弄21C号"},{"address":"上海市静安区武宁南路488智慧广场28层","city":"上海市","city_id":1,"distance":"","district_id":5254,"geohash":"wtw3ejzkfncu","id":"B00155HV1V","latitude":31.23361,"longitude":121.430943,"name":"Shanghai Rich Investment Ltd.","request_id":"6142944407843629067","short_address":"武宁南路488智慧广场28层"},{"address":"上海市静安区延安中路1440号阿波罗大厦4层416","city":"上海市","city_id":1,"distance":"","district_id":5254,"geohash":"wtw3eeepph9c","id":"B00155G41E","latitude":31.221624,"longitude":121.447294,"name":"First Advantage Shanghai Office","request_id":"9782756015177117342","short_address":"延安中路1440号阿波罗大厦4层416"},{"address":"上海市徐汇区漕溪北路375号中金国际广场C座16层","city":"上海市","city_id":1,"distance":"","district_id":5252,"geohash":"wtw37qhbfrv8","id":"B00155QKX3","latitude":31.190356,"longitude":121.438512,"name":"Retail Solutions Shanghai Inc.","request_id":"8183374465477928287","short_address":"漕溪北路375号中金国际广场C座16层"},{"address":"上海市浦东新区浦东大道2188号上安大厦商务楼520","city":"上海市","city_id":1,"distance":"","district_id":5262,"geohash":"wtw3vby8cyvt","id":"B00155G4JT","latitude":31.249403,"longitude":121.550757,"name":"Shanghai Joint Hope International","request_id":"6636274883433115508","short_address":"浦东大道2188号上安大厦商务楼520"},{"address":"上海市长宁区番禺路586东方商务大楼6层A、C","city":"上海市","city_id":1,"distance":"","district_id":5253,"geohash":"wtw37py7dh3u","id":"B00155H6K2","latitude":31.200423,"longitude":121.42957,"name":"Shanghai Deco.Co.Ltd.","request_id":"9841586596033332188","short_address":"番禺路586东方商务大楼6层A、C"},{"address":"上海市普陀区西康路1018号元茂金豪大厦1307室","city":"上海市","city_id":1,"distance":"","district_id":5255,"geohash":"wtw3erpqt6uf","id":"B00155HV1T","latitude":31.240755,"longitude":121.442073,"name":"Shanghai K&M Co.Ltd.","request_id":"8894504829804043440","short_address":"西康路1018号元茂金豪大厦1307室"},{"address":"上海市虹口区曲阳路800号上海商务中心商务大厦39层","city":"上海市","city_id":1,"distance":"","district_id":5257,"geohash":"wtw3uxekhsw1","id":"B00155HUZM","latitude":31.287027,"longitude":121.491481,"name":"Shanghai Trade Center Co.Ltd.","request_id":"2279721011575437757","short_address":"曲阳路800号上海商务中心商务大厦39层"},{"address":"上海市浦东新区浦电路438号双鸽大厦11、20层","city":"上海市","city_id":1,"distance":"","district_id":5262,"geohash":"wtw3tecy3883","id":"B001558TZA","latitude":31.222847,"longitude":121.53323,"name":"Visage Imports Ltd.Shanghai Office","request_id":"2342359052565435454","short_address":"浦电路438号双鸽大厦11、20层"},{"address":"上海市徐汇区中山西路2368号华鼎大厦26层","city":"上海市","city_id":1,"distance":"","district_id":5252,"geohash":"wtw37k0psp9b","id":"B00155G4MJ","latitude":31.180527,"longitude":121.432059,"name":"Shanghai International Conference Management Organization","request_id":"1836423057916123402","short_address":"中山西路2368号华鼎大厦26层"},{"address":"上海市黄浦区嵩山路88号","city":"上海市","city_id":1,"distance":"","district_id":5251,"geohash":"wtw3s5zf0yyc","id":"B00156DWCN","latitude":31.222151,"longitude":121.475528,"name":"上海新天地安达仕酒店","request_id":"7567349485584270715","short_address":"嵩山路88号"},{"address":"上海市静安区宁路200号欣安大厦东峰27C-28C","city":"上海市","city_id":1,"distance":"","district_id":5254,"geohash":"wtw3e7k0grsf","id":"B00155KMLC","latitude":31.219194,"longitude":121.437524,"name":"Shanghai FS Trading Co.Ltd.","request_id":"1901980834687199544","short_address":"宁路200号欣安大厦东峰27C-28C"},{"address":"上海市长宁区番禺路586号东方商务大楼","city":"上海市","city_id":1,"distance":"","district_id":5253,"geohash":"wtw37py7dh3u","id":"B00155IP4O","latitude":31.200423,"longitude":121.42957,"name":"Shanghai Snap Printing Co.Ltd.","request_id":"1840623571762364134","short_address":"番禺路586号东方商务大楼"}];
-    res.send(data)
-    // fetch(`https://h5.ele.me/restapi/bgs/poi/search_poi_nearby_alipay?keyword=${req.query.keyword}&offset=${req.query.offset}&limit=${req.query.limit}`).then( res => {
-    //     res.send(res)
+    let params = req.originalUrl.substring(req.originalUrl.indexOf('?') + 1);
+    var url = `https://h5.ele.me/restapi/bgs/poi/search_poi_nearby_alipay?${params}`;
+    fetch(url).then( result => result.json()).then(json => {
+        res.send(json);
+    }).catch( e => {
+        res.send(e);
+    })
+})
+
+router.get('/location' , function (req , res) {
+    // var url = `http://api.map.baidu.com/?qt=rgc&x=${req.query.longitude}&y=${req.query.latitude}`;
+    // fetch(url).then( result => result.json()).then(json => {
+    //     res.send(json);
     // }).catch( e => {
-    //     res.send(e)
+    //     res.send(e);
     // })
+    res.send({
+        id:'B0FFI6BW75',
+        city:'上海市',
+        address:'上海市长宁区虹桥路2545弄2535号',
+        name:'永融国际中心',
+        latitude:'31.19111',
+        longitude:'121.35504',
+        request_id:"4689631406848647838",
+        short_address:'虹桥路2545弄2535号'
+    })
+})
+
+router.post('/login', function (req , res) {
+    res.send('3546576dfdgg346yfg4657');
+})
+
+router.get('/search' , function (req , res) {
+    if(!req.query.latitude || !req.query.longitude ) {
+        res.send(null);
+    }
+    var data = {
+        recommends:[
+            {
+                id:1,
+                image_hash:'29703a498f85bb456578a62211fe64fajpeg',
+                rst_id:'E16791356703169402584',
+                name:'上海市独家鸡公煲村夫烤鱼龙虾（七宝店）',
+                activities:[
+                    {id:10,name:'减',style:{backgroundColor:'rgb(250, 112, 71)'}}
+                ],
+                rating:'4.6'
+            },
+            {
+                id:2,
+                image_hash:'752cab6365c235b3fad3fdc4636c2f8djpeg',
+                rst_id:'E16791356703169402584',
+                name:'香乡村大龙虾（七宝老街店）',
+                activities:[
+                    {id:11,name:'减',style:{backgroundColor:'rgb(250, 112, 71)',marginRight:'5px'}},
+                    {id:21,name:'蜂鸟',style:{backgroundColor:'rgb(35, 149, 255)'}}
+                ],
+                rating:'4.9'
+            },
+            {
+                id:3,
+                image_hash:'b00016eacb8c7c6eaa0759fab0fe3e83jpeg',
+                rst_id:'E16791356703169402584',
+                name:'东北烧烤龙虾',
+                activities:[
+                    {id:31,name:'减',style:{backgroundColor:'rgb(250, 112, 71)'}}
+                ],
+                rating:'4.6'
+            },
+            {
+                id:4,
+                image_hash:'1426095bd32816d38f92eb8325384327jpeg',
+                rst_id:'E16791356703169402584',
+                name:'鸡公煲烤鱼龙虾（航新路）',
+                activities:[
+                    {id:41,name:'减',style:{backgroundColor:'rgb(250, 112, 71)'}}
+                ],
+                rating:'4.4'
+            }
+        ],
+        list:[
+            {id:101,name:'龙虾',rst_id:'E16791356703169402584',},
+            {id:201,name:'龙虾尾',rst_id:'E16791356703169402584',},
+            {id:301,name:'龙虾先生',rst_id:'E16791356703169402584',},
+            {id:401,name:'龙虾风暴',rst_id:'E16791356703169402584',}
+        ]
+    }
+    res.send(data);
+})
+
+router.get('/profile' , function (req , res) {
+    res.send({
+        image_hash: 'cc1d25b70a0db235c45115e04ba08c05jpeg', 
+        name: 'E-King',
+        mobile: '183****2474',
+        wallet: '0.00',
+        redbag: 5, 
+        goldcoin:77 
+    },)
 })
 module.exports = router;
 
