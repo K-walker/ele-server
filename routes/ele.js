@@ -1,10 +1,8 @@
 var express = require('express');
-var history = require('connect-history-api-fallback');
+
 var router = express.Router();
 var path = require('path');
-const fetch = require('node-fetch');
-
-express().use(history())
+var http = require('http');
 
 router.get('/entries', function(req, res, next) {
     var data = [
@@ -3996,12 +3994,6 @@ router.get('/position' , function (req , res) {
 })
 
 router.get('/location' , function (req , res) {
-    // var url = `http://api.map.baidu.com/?qt=rgc&x=${req.query.longitude}&y=${req.query.latitude}`;
-    // fetch(url).then( result => result.json()).then(json => {
-    //     res.send(json);
-    // }).catch( e => {
-    //     res.send(e);
-    // })
     res.send({
         id:'B0FFI6BW75',
         city:'上海市',
