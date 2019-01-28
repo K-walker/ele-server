@@ -10,15 +10,26 @@ Redis.prototype.get = function (key) {
 			if(err) reject(err) ;
 			else resolve(reply)
 		})
-	})
+	}) 
 }
-
+ 
 Redis.prototype.set = function (key , value) {
 	return new Promise( (resolve , reject) => {
 		this.client.set(key , value ,  (err , reply) => {
 			if(err) reject(err) ;
 			else resolve(reply)
 		})
+	})
+}
+
+Redis.prototype.setObj = function (key , obj) {
+	return this.set(key , JSON.stringify(obj));
+}
+
+Redis.prototype.getObj = function (key) {
+	return this.get(key).then( data => {
+		if(data) data = JSON.parse(data);
+		return Promise.resolve(data);
 	})
 }
 
