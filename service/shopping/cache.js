@@ -33,16 +33,27 @@ ShoppingCache.prototype.getRestaurants = async function (url , {offset , limit})
 }
 
 ShoppingCache.prototype.getMenus = async function (url , id) {
+    id = 'E12468818927622248669';  // 暂时只用这家的菜单来测试
     let result  = await cache.getObj(url);
     if(!result) {
         let menuGroup = await db.query('select * from ?? where rst_id = ?' , ['tb_menu_group', id]);
-        let menu = await db.query('select * from ?? where restaurant_id = ?' , ['tb_menu',id]);
+        let foods = await db.query('select * from ?? where restaurant_id = ?' , ['tb_menu',id]);
         await cache.setObj(url , {
-            menuGroup:menuGroup,
-            menu:menu
+            menus:menuGroup,
+            foods:foods
         });
     }
     return Promise.resolve(result);
 }
+
+ShoppingCache.prototype.getRstInfo = async function (url , id) {
+    let result  = await cache.getObj(url);
+    if(!result) {
+        let rst = await db.query('select * from ?? where id = ?' , ['tb_rst', id]);
+        await cache.setObj(url , rst);
+    }
+    return Promise.resolve(result);
+}
+
 
 module.exports = new ShoppingCache();

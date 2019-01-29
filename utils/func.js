@@ -75,3 +75,25 @@ exports.uncodeUtf16 = function (str) {
     });
     return result;
 }
+
+
+exports.isEmpty = function (value) {
+	let type = this.getType(value);
+	if(type === 'Undefined' || type === 'Null') return true ;
+	if(type === 'Array') return  value.length == 0 ;
+	if(type === 'String') return value.replace(/\s/g,'') === '' ;
+	if(type === 'Object') return Object.keys(value).length === 0 ;
+	return false ;
+}
+
+exports.getType = function (obj) {
+	let type = Object.prototype.toString.call(obj);
+	if(type === '[object String]') return 'String' ;
+	if(type === '[object Number]') return 'Number' ;
+	if(type === '[object Null]') return 'Null' ;
+	if(type === '[object Boolean]') return 'Boolean' ;
+	if(type === '[object Object]') return 'Object' ;
+	if(type === '[object Array]') return 'Array' ;
+	if(type === '[object Undefined]') return 'Undefined' ;
+	if(type === '[object Date]') return 'Date' ;
+}

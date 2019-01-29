@@ -1,4 +1,4 @@
-const util = require('util')
+const utils = require('../../utils/func')
 const cache = require('./cache');
 
 function ShoppingService () {
@@ -29,18 +29,23 @@ ShoppingService.prototype.getRestaurants = async function (url , params) {
     })
 }
 
+// 获取饭店详情
 ShoppingService.prototype.getDetail = async function (url , id) {
-    let result = await cache.getMenus(url , id);
-    let data = [] ;
-    result.menu.forEach( menu => {
-        let mGroup = result.menuGroup.find( group => group.id == menu.category_id);
-        if(mGroup && !mGroup.menus) {
-            mGroup.menus = [] ;
-        }
-        mGroup.menus.push(menu);
-        data.push(mGroup)
-    })
-    return Promise.resolve(data);
+    try {
+        let menus = await cache.getMenus(url+'/menu' , id);
+        let rsts = await cache.getRstInfo(url+'/rst'  , id);
+        let rst = rsts[0];
+        rst.activities = utils.isEmpty(rst.activities) ? [] : JSON.parse(rst.activities);
+        rst.support_tags = utils.isEmpty(rst.support_tags) ? [] : JSON.parse(rst.support_tags);
+        rst.supports = utils.isEmpty(rst.supports) ? [] : JSON.parse(rst.supports);
+        rst.flavors = utils.isEmpty(rst.flavors) ? [] : JSON.parse(rst.flavors);
+        return Promise.resolve({
+            menu:menus,
+            rst:rst
+        })
+    } catch (error) {
+        return Promise.reject(error)
+    }
 }
 
 
