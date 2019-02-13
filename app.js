@@ -5,10 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var history = require('connect-history-api-fallback');
 
-var shoppingRouter = require('./routes/shopping');
-var poiRouter = require('./routes/poi');
-
-// var testRouter = require('./routes/test');
+var router = require('./routes/index');
 
 var app = express();
 
@@ -27,11 +24,11 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/ele/poi', poiRouter);
-app.use('/ele/shopping', shoppingRouter);
-
-// 测试路由
-// app.use('/test', testRouter);
+// 监听路由
+router(app)
+// app.use('/ele', eleRouter);
+// app.use('/ele/poi', poiRouter);
+// app.use('/ele/shopping', shoppingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

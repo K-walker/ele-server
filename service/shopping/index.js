@@ -33,8 +33,8 @@ ShoppingService.prototype.getRestaurants = async function (url , params) {
 ShoppingService.prototype.getDetail = async function (url , id) {
     try {
         let menus = await cache.getMenus(url+'/menu' , id);
-        let rsts = await cache.getRstInfo(url+'/rst'  , id);
-        let rst = rsts[0];
+        let rstInfo  =  await cache.getRstInfo(url+'/rst'  , id);
+        let rst = rstInfo[0];
         rst.activities = utils.isEmpty(rst.activities) ? [] : JSON.parse(rst.activities);
         rst.support_tags = utils.isEmpty(rst.support_tags) ? [] : JSON.parse(rst.support_tags);
         rst.supports = utils.isEmpty(rst.supports) ? [] : JSON.parse(rst.supports);

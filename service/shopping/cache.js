@@ -38,19 +38,23 @@ ShoppingCache.prototype.getMenus = async function (url , id) {
     if(!result) {
         let menuGroup = await db.query('select * from ?? where rst_id = ?' , ['tb_menu_group', id]);
         let foods = await db.query('select * from ?? where restaurant_id = ?' , ['tb_menu',id]);
-        await cache.setObj(url , {
+        result = {
             menus:menuGroup,
             foods:foods
-        });
+        }
+        await cache.setObj(url , result);
     }
     return Promise.resolve(result);
 }
 
+/**
+ * 获取商家详情
+ */
 ShoppingCache.prototype.getRstInfo = async function (url , id) {
     let result  = await cache.getObj(url);
     if(!result) {
-        let rst = await db.query('select * from ?? where id = ?' , ['tb_rst', id]);
-        await cache.setObj(url , rst);
+        result = await db.query('select * from ?? where id = ?' , ['tb_rst', id]);
+        await cache.setObj(url , result);
     }
     return Promise.resolve(result);
 }
